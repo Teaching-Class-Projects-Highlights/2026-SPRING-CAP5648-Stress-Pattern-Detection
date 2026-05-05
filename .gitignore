@@ -1,3 +1,27 @@
+# --- Project-specific ignores ---
+
+# Dataset
+data/
+WESAD/
+datasets/
+
+# WESAD raw files
+*.pkl
+
+# Generated data
+processed_features.csv
+*.csv
+
+# Model outputs
+*.pth
+*.pt
+*.h5
+
+# Logs / outputs
+logs/
+outputs/
+*.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

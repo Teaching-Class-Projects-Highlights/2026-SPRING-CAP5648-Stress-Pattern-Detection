@@ -20,7 +20,7 @@ Download From:
 ```
 https://www.kaggle.com/datasets/orvile/wesad-wearable-stress-affect-detection-dataset?utm_source=chatgpt.com
 ```
-After downloading the dataset, place the it inside the ```/data``` folder.
+After downloading the dataset, place the it inside a folder called ```/data```.
 
 ## ⚙️ Setup
 ### 1. Data Preprocessing 

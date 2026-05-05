@@ -10,6 +10,7 @@ datasets/
 
 # Generated data
 processed_features.csv
+windowed_features.csv
 *.csv
 
 # Model outputs

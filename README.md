@@ -16,46 +16,64 @@ While many existing studies focus on maximizing predictive accuracy, this projec
 - Includes ECG, EDA, temperature, and motion data
 - Contains labeled conditions such as baseline and stress
 
-Download From: 
-```
-https://www.kaggle.com/datasets/orvile/wesad-wearable-stress-affect-detection-dataset?utm_source=chatgpt.com
-```
-After downloading the dataset, place the it inside a folder called ```/data```.
+### Automatic Download
+This project automatically downloads the dataset using the Kaggle API.
 
-## ⚙️ Setup
-### 1. Data Preprocessing 
+Install Kaggle CLI:
+```
+pip install kaggle
+```
+The dataset (~2.5GB) will be automatically downloaded into the /data directory on first run.
+
+## ⚙️ Full Pipeline Execution
+
+### To run the entire project:
 ``` 
 python main.py
 ```
-- Loads raw .pkl files from the dataset
-- Filters data to baseline (1) and stress (2) labels
-- Downsamples signals for efficiency
-- **Outputs:** processed_features.csv
 
-### 2. Feature Extraction
+### 1. Dataset Download & Loading
+- Automatically downloads WESAD from Kaggle (if not already present)
+- Loads raw .pkl subject files
+- Filters valid physiological signals (baseline vs stress only)
+
+### 2. Data Preprocessing
+- Extracts ECG, EDA, and temperature signals
+- Removes irrelevant labels
+- Downsamples signals for computational efficiency
+
+**Outputs:** processed_features.csv
+
+### 3. Feature Extraction
 ``` 
 python featureExtraction.py
 ```
+Executed automatically within the pipeline:
 - Segments data into fixed-size time windows
 - Computes statistical features (mean, std, min, max)
-- **Outputs:** windowed_features.csv
 
-### 3. Modeling & Analysis
+**Outputs:** windowed_features.csv
+
+### 4. Modeling & Analysis
 ``` 
 python models.py
 ```
+Executed automatically within the pipeline:
 - Trains and evaluates:
   - Support Vector Machines (linear and RBF)
   - K-Nearest Neighbors
   - Naïve Bayes
 - Compares different feature sets (ECG, EDA, combined)
-- **Outputs:** classification metrics and PCA visualizations
+
+**Generates:** classification metrics and PCA visualizations
 
 ### All Libraries & Imports
 ```
 import os
 import pickle
 import warnings
+import subprocess
+import zipfile
 
 import pandas as pd
 from src.parse.load import load_all_subjects
@@ -66,6 +84,10 @@ from sklearn.svm import SVC
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
+```
+
+```
+pip install kaggle
 ```
 
 ## 🖼️ Results
@@ -85,7 +107,31 @@ from sklearn.metrics import confusion_matrix, classification_report
 - Incorporate temporal and frequency-based features (e.g., HRV)
 - Improve feature representation for better separability
 
+## 🔧 Project Structure
+```
+2026-SPRING-CAP5648-Stress-Pattern-Detection-main/
+├── data/
+│   └── WESAD/
+│       └── ...
+├── src/
+│   ├── features/
+│   │   └── featureExtraction.py
+│   ├── modeling/
+│   │   └── models.py
+│   ├── parse/
+│   │   └── load.py
+│   └── util/
+│       └── paths.py
+├── main.py
+├── processed_features.csv
+├── windowed_features.csv
+├── LICENSE
+├── .gitignore
+├── Separability Analysis of Stress-Related Physiological Patterns.pdf
+├── Pattern Recognition Final Report.pdf
+└── README.md
+```
+
 ## ⚠️ Disclaimer
 This project is for research and educational purposes only.
 It is not intended for medical or clinical use
-
